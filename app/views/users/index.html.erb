@@ -1,0 +1,61 @@
+  <h1>Fake User Data Generation</h1>
+
+  <label for="country-select">Select Country:</label>
+  <select id="country-select">
+    <option value="en">USA</option>
+    <option value="ru">Russia</option>
+    <option value="bd">Bangladesh</option>
+  </select>
+
+  <div id="user-data-table">
+    <!-- Table will be populated dynamically -->
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const countrySelect = document.getElementById('country-select');
+
+      // Event listener to fetch data when country selection changes
+      countrySelect.addEventListener('change', function() {
+        const country = countrySelect.value;
+        fetchData(country);
+      });
+
+      // Function to fetch data from the server based on country selection
+      function fetchData(country) {
+        fetch(`/users/data?country=${country}`)
+          .then(response => response.json())
+          .then(data => {
+            // Call function to render table with fetched data
+            renderTable(data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }
+
+      // Function to render table with fetched data
+      function renderTable(data) {
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        // Iterate over the data and create table rows
+        data.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${item.name}</td><td>${item.address}</td><td>${item.phone}</td>`;
+          tbody.appendChild(row);
+        });
+
+        // Append table rows to table body
+        table.appendChild(tbody);
+
+        // Replace existing table with new one
+        const oldTable = document.getElementById('user-data-table');
+        oldTable.innerHTML = '';
+        oldTable.appendChild(table);
+      }
+
+      // Fetch data for the default country on page load
+      fetchData(countrySelect.value);
+    });
+  </script>

@@ -1,0 +1,9 @@
+<!-- _table_rows.html.erb -->
+<% data['faker']['name']['first_name'].each_with_index do |first_name, i| %>
+  <tr>
+    <td><%= i + 1 %></td>
+    <td><%= "#{first_name} #{data['faker']['name']['middle_name'][i % 10]} #{data['faker']['name']['last_name'][i % 10]}" %></td>
+    <td><%= data['faker']['phone_number']['formats'].sample %></td>
+    <td><%= data['faker']['address']['street_address'].sample %></td>
+  </tr>
+<% end %>

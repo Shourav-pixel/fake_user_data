@@ -1,0 +1,56 @@
+<h1>Admin#home</h1>
+
+<div data-controller= "home">
+
+ <label for="Region">Region:</label>
+  <select name="locale" id="locale" data-action="home#update" data-home-target="select">
+    <option value="en" <%= 'selected' if params[:locale] == 'en' %>>USA</option>
+    <option value="ru" <%= 'selected' if params[:locale] == 'ru' %>>Russia</option>
+    <option value="bd" <%= 'selected' if params[:locale] == 'bd' %>>Bangladesh</option>
+ 
+  
+  </select>
+
+  <label for="error-slider">Number of Errors per Record:</label>
+  <input type="range" id="error-slider" name="error-slider" min="0" max="10" value="0">
+  <input type="number" id="error-input" name="error-input" min="0" max="1000" value="0">
+
+  <label for="seed-input">Seed Value:</label>
+  <input type="text" id="seed-input" name="seed-input">
+  <button id="random-seed-btn">Random Seed</button>
+</div>
+
+<br>
+<br>
+    <table class="table table-light table-hover table-striped">
+      <tr>
+    <thead class="table-dark center">
+
+     
+    <center><th>Id</th></center>
+    <center><th>Name</th></center>
+    <center><th>Phone</th></center>
+    <center><th>Address</th></center>
+    
+    
+    
+    
+      </tr>
+       </thead>
+       <tbody  data-infinite-scroll-target="tbody">
+         <% 20.times do |i| %> 
+      <tr>
+        <td><%= i + 1 %></td> 
+        <td>
+          <%= t("faker.name.first_name")[i % 10] %> 
+          <%= t("faker.name.middle_name")[i % 10] %> 
+          <%= t("faker.name.last_name")[i % 10] %> 
+        </td>
+        <td><%= t("faker.phone_number.formats").sample %></td> 
+        <td><%= t("faker.address.street_address").sample %>,<%= t("faker.address.city").sample %>,<%= t("faker.address.state").sample %>,<%= t("faker.address.zip_code").sample %></td> 
+      </tr>
+    <% end %>
+       </tbody>
+   
+     
+</table>
